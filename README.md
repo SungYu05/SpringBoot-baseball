@@ -14,22 +14,22 @@
 - Jstl
 - Tomcat-embed-jasper
 
-### 주말에 변경할 목록
-- DB에 포지션, 퇴출사유 테이블 따로 만들기
-- Controller 구현해서 view  뿌리기
-- DTO 제대로 정리해서 올리기
+### 해야 할 목록
+- 모든 테이블 delete 만들기
+- player 구현
+- expulsion 구현
 
-### RestController를 이용한 결과값
-![image](https://user-images.githubusercontent.com/108706329/191903098-382ad56b-165e-4a9e-8af0-e398dcdd5a1e.png)
-![image](https://user-images.githubusercontent.com/108706329/191903496-f0cb8b69-d2c1-4304-81e0-598651d623d1.png)
-
-- 주말에 Controller 만들기
+### 지금까지 만든 결과값
+![image](https://user-images.githubusercontent.com/114338362/192148823-f30ec241-ff04-437c-9a8d-f93883c7608f.png)
+![image](https://user-images.githubusercontent.com/114338362/192148845-927f0579-0c45-4dda-8c53-e54dc93fb211.png)
+![image](https://user-images.githubusercontent.com/114338362/192148869-7a909d87-8518-4f49-bacd-21feba1538a0.png)
+![image](https://user-images.githubusercontent.com/114338362/192148886-097f4ac0-143e-4099-89e1-4ce8da58319e.png)
 
 ### MariaDB 사용자 생성 및 권한 주기
 ```sql
 CREATE USER 'bsa'@'%' IDENTIFIED BY 'bsa1234';
 CREATE DATABASE baseballdb;
-GRANT ALL PRIVILEGES ON baseballdb.* TO 'bsa'@'%';
+GRANbaseballdbT AbaseballdbLL PRIVILEGES ON baseballdb.* TO 'bsa'@'%';
 ```
 
 ### 테이블 생성
@@ -56,38 +56,22 @@ create table player(
     id int primary KEY auto_increment,
     playerName VARCHAR(20),
     teamId INT,
-    positionId INT,
+    positions VARCHAR(20),
     createdAt TIMESTAMP
 );
 
 DROP table expulsion;
 create table expulsion(
-    id int primary KEY auto_increment,
-    playerId int,
-    teamId INT,
-    positionId INT,
-    reasonId INT,
+    id int primary KEY AUTO_INCREMENT,
+    reason VARCHAR(20),
+    playerId INT,
     createdAt TIMESTAMP
-);
-
-DROP table positions;
-create table positions(
-    id int primary KEY auto_increment,
-    positions VARCHAR(20)
-);
-
-DROP table reason;
-create table reason(
-    id int primary KEY auto_increment,
-    reasons VARCHAR(20)
 );
 
 SELECT * FROM team;
 SELECT * FROM stadium;
 SELECT * FROM player;
 SELECT * FROM expulsion;
-SELECT * FROM positions;
-SELECT * FROM reason;
 COMMIT;
 ```
 
@@ -101,42 +85,34 @@ insert into team(teamName, stadiumId, createdAt) values('기아타이거즈', 1,
 insert into team(teamName, stadiumId, createdAt) values('롯데자이언츠', 2, NOW());
 insert into team(teamName, stadiumId, createdAt) values('엘지트윈스', 3, NOW());
 
-insert into positions(positions) VALUES('타자');
-insert into positions(positions) VALUES('투수');
-insert into positions(positions) VALUES('외야수');
-insert into positions(positions) VALUES('내야수');
+insert into player(playerName, teamId, positions , createdAt) VALUES('김진욱', 2, '투수', NOW());
+insert into player(playerName, teamId, positions , createdAt) VALUES('안치홍', 2, '내야수', NOW());
+insert into player(playerName, teamId, positions , createdAt) VALUES('전준우', 2, '외야수', NOW());
+insert into player(playerName, teamId, positions , createdAt) VALUES('임창용', 1, '투수', NOW());
 
-insert into reason(reasons) values('자진사퇴');
-insert into reason(reasons) values('성적부진');
-insert into reason(reasons) values('논란');
+insert into expulsion(reason , playerId , createdAt) VALUES('논란',4 , NOW());
 
-insert into player(playerName, teamId, positionId, createdAt) VALUES('김진욱', 2, 2, NOW());
-insert into player(playerName, teamId, positionId, createdAt) VALUES('안치홍', 2, 4, NOW());
-insert into player(playerName, teamId, positionId, createdAt) VALUES('전준우', 2, 3, NOW());
-insert into player(playerName, teamId, positionId, createdAt) VALUES('임창용', 1, 3, NOW());
-
-insert into expulsion(playerId, teamId, positionId, reasonId, createdAt) VALUES(4, 1, 2, 3, NOW());
+SELECT * FROM team;
+SELECT * FROM stadium;
+SELECT * FROM player;
+SELECT * FROM expulsion;
+COMMIT;
 ```
 
 ### 상세보기 쿼리
 ```sql
-SELECT stadiumName, createdAt
+SELECT ROW_NUMBER() over(ORDER BY id) AS numbers, id, stadiumName, createdAt
 FROM stadium;
 
-SELECT s.stadiumName, t.teamName, t.createdAt
-FROM team t 
+SELECT ROW_NUMBER() over(ORDER BY id) AS numbers, t.id, s.stadiumName, t.teamName, t.createdAt
+FROM team t
 LEFT OUTER JOIN stadium s
 ON t.stadiumId = s.id;
 
-SELECT t.teamName, po.positions, p.playerName, p.createdAt
+SELECT ROW_NUMBER() over(ORDER BY id) AS numbers, t.id,
+t.teamName, p.playerName, p.positions, p.createdAt
 FROM player p
-LEFT OUTER JOIN team t ON p.teamId = t.id
-LEFT OUTER JOIN positions po ON p.positionId = po.id;
-
-SELECT t.teamName, po.positions, p.playerName, r.reasons, e.createdAt
-FROM expulsion e
-LEFT OUTER JOIN player p ON p.id = e.playerId
-LEFT OUTER JOIN team t ON p.teamId = t.id
-LEFT OUTER JOIN reason r ON r.id = e.reasonId
-LEFT OUTER JOIN positions po ON po.id = e.positionId;
+LEFT
+OUTER JOIN team t 
+ON p.teamId = t.id;
 ```
