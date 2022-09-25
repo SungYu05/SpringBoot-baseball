@@ -2,9 +2,8 @@ package site.metacoding.baseball.web;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.baseball.domain.player.Player;
+import site.metacoding.baseball.domain.stadium.Stadium;
+import site.metacoding.baseball.domain.team.Team;
 import site.metacoding.baseball.service.PlayerService;
+import site.metacoding.baseball.service.TeamService;
 import site.metacoding.baseball.web.dto.request.player.SaveDto;
 import site.metacoding.baseball.web.dto.response.CMRespDto;
 
@@ -22,7 +24,6 @@ import site.metacoding.baseball.web.dto.response.CMRespDto;
 @Controller
 public class PlayerController {
 
-	private final HttpSession session;
 	private final PlayerService playerService;
 	
 	@PostMapping("/api/player/save")
@@ -31,14 +32,16 @@ public class PlayerController {
 		return new CMRespDto<>(1, "선수 등록 완료" , null);
 	}
 	
-	@GetMapping("/player/SaveForm")
-	public String signForm() {
+	@GetMapping("/player/saveForm")
+	public String saveForm(Model model) {
+		List<Team> teams = playerService.팀목록보기();
+		model.addAttribute("teams", teams);
 		return "player/playerSaveForm";
 	}
 	
 	@GetMapping("/player")
 	public String playList(Player player) {
-		List<Player> playerList = playerService.포지션보기();
+		List<Player> playerList = playerService.선수목록보기();
 		return "player/playerList";
 	}
 	

@@ -11,5 +11,4 @@ public interface StadiumDao {
 	public List<Stadium> findByTeam();
 	public Stadium findById(Integer id); // 야구장 찾기
 	public void update(Stadium stadium); // 야구장 업데이트
-
 }

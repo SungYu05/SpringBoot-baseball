@@ -25,7 +25,7 @@ public class TeamService {
 	}
 	
 	public List<TeamListDto> 팀목록보기() {
-		return teamDao.findAByStadiumName();
+		return teamDao.findAll();
 	}
 	
 	public List<Stadium> 구장목록(){

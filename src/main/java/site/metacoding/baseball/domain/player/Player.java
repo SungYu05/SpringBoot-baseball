@@ -13,13 +13,14 @@ public class Player {
 	private Integer id;
 	private String playerName;
 	private Integer teamId;
-	private Integer positionId;
+	private String positions ;
 	private Timestamp createdAt;
+	private boolean expulsion;
 	
-	public Player(String playerName, Integer teamId, Integer positionId) {
+	public Player(String playerName, Integer teamId, String positions) {
 		this.playerName = playerName;
 		this.teamId = teamId;
-		this.positionId = positionId;
+		this.positions = positions;
 	}
 	
 	

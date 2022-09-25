@@ -17,7 +17,6 @@
 				<tr>
 					<td>${stadium.numbers}</td>
 					<td>${stadium.stadiumName}</td>
-					<td>${stadium.createdAt}</td>
 					<td><fmt:formatDate value="${stadium.createdAt}"
 							pattern="yyyy-MM-dd" /></td>
 					<td><a

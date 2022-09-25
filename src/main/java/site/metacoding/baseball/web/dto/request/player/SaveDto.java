@@ -9,10 +9,10 @@ import site.metacoding.baseball.domain.player.Player;
 public class SaveDto {
 	private String playerName;
 	private Integer teamId;
-	private Integer positionId;
+	private String positions ;
 	
-	public Player toEntity(String playerName, Integer teamId, Integer positionId) {
-		Player player = new Player(this.playerName, this.teamId, this.positionId);
+	public Player toEntity(String playerName, Integer teamId, String positions) {
+		Player player = new Player(this.playerName, this.teamId, this.positions);
 		return player;
 	}
 

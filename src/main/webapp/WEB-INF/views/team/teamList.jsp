@@ -19,11 +19,12 @@
 					<td>${team.numbers}</td>
 					<td>${team.stadiumName}</td>
 					<td>${team.teamName}</td>
-					<td>${team.createdAt}</td>
+					<td><fmt:formatDate value="${team.createdAt}"
+							pattern="yyyy-MM-dd" /></td>
 					<td><a
-						href="/teamUpdateForm/${team.id}/${team.teamName}"><i
+						href="/stadiumUpdateForm/${team.id}/${team.teamName}"><i
 							class="fa fa-wrench"></i></a></td>
-					<td><i onclick="teamDelete(${stadium.id},this);"
+					<td><i onclick="stadiumDelete(${stadium.id},this);"
 						class="fa fa-minus"></i></td>
 				</tr>
 			</c:forEach>
