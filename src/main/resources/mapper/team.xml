@@ -6,10 +6,12 @@
 
 	<select id="findAll"
 		resultType="site.metacoding.baseball.web.dto.response.team.TeamListDto">
-		SELECT ROW_NUMBER() over(ORDER BY id) AS numbers, t.id, s.stadiumName,
+		SELECT ROW_NUMBER() over(ORDER BY id) AS numbers, t.id,
+		s.stadiumName,
 		t.teamName, t.createdAt
 		FROM team t
-		LEFT OUTER JOIN stadium s
+		LEFT OUTER JOIN
+		stadium s
 		ON t.stadiumId = s.id
 	</select>
 
@@ -21,5 +23,10 @@
 		INSERT INTO team(teamName, stadiumId, createdAt)
 		VALUES(#{teamName}, #{stadiumId}, NOW())
 	</insert>
+
+	<select id="findByPlayer"
+		resultType="site.metacoding.baseball.domain.team.Team">
+		SELECT * FROM team
+	</select>
 
 </mapper>

@@ -8,7 +8,7 @@ $("#btn").click(() => {
 $("#btnSave").click(() => {
 	let data = {
 		playerName: $("#playerName").val(),
-		teamId: $("#teamId").val(),
+		teamId: $("#team").val(),
 		positions: $("#positions").val()
 	};
 

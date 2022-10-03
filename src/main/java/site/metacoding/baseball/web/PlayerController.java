@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import lombok.RequiredArgsConstructor;
 import site.metacoding.baseball.domain.player.Player;
 import site.metacoding.baseball.domain.stadium.Stadium;
@@ -19,6 +21,7 @@ import site.metacoding.baseball.service.PlayerService;
 import site.metacoding.baseball.service.TeamService;
 import site.metacoding.baseball.web.dto.request.player.SaveDto;
 import site.metacoding.baseball.web.dto.response.CMRespDto;
+import site.metacoding.baseball.web.dto.response.player.PlayerListDto;
 
 @RequiredArgsConstructor
 @Controller
@@ -40,8 +43,9 @@ public class PlayerController {
 	}
 	
 	@GetMapping("/player")
-	public String playList(Player player) {
-		List<Player> playerList = playerService.선수목록보기();
+	public String playList(Model model) {
+		List<PlayerListDto> playerList = playerService.선수목록보기();
+		model.addAttribute("playerList", playerList);
 		return "player/playerList";
 	}
 	

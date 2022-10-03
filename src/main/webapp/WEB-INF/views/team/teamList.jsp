@@ -7,7 +7,8 @@
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>팀</th>
+				<th>야구장이름</th>
+				<th>팀이름</th>
 				<th>창단일</th>
 				<th>수정</th>
 				<th>삭제</th>
