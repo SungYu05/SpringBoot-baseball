@@ -6,6 +6,10 @@ $("#btn").click(() => {
 
 
 $("#btnSave").click(() => {
+	save();
+});
+
+function save() {
 	let data = {
 		playerName: $("#playerName").val(),
 		teamId: $("#team").val(),
@@ -28,4 +32,18 @@ $("#btnSave").click(() => {
 			history.back();
 		}
 	});
-});
+}
+
+function deleteById(id) {
+	$.ajax("/api/player/" + id + "/delete", {
+		type: "DELETE",
+		datatype: "JSON",
+	}).done((res) => {
+		if (res.code == 1) {
+			alert("선수 삭제 완료");
+			location.reload();
+		} else {
+			alert("선수 삭제 실패")
+		}
+	});
+}

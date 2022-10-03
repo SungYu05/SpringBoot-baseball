@@ -21,9 +21,8 @@
 							pattern="yyyy-MM-dd" /></td>
 					<td><a
 						href="/stadiumUpdateForm/${stadium.id}/${stadium.stadiumName}"><i
-							class="fa fa-wrench"></i></a></td>
-					<td><i onclick="stadiumDelete(${stadium.id},this);"
-						class="fa fa-minus"></i></td>
+							class="fa fa-wrench">수정</i></a></td>
+					<td><button onclick="deleteById(${stadium.id});" class="btn btn-danger btn-sm">삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

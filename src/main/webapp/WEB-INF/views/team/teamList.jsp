@@ -22,11 +22,10 @@
 					<td>${team.teamName}</td>
 					<td><fmt:formatDate value="${team.createdAt}"
 							pattern="yyyy-MM-dd" /></td>
-					<td><a
-						href="/stadiumUpdateForm/${team.id}/${team.teamName}"><i
+					<td><a href="/teamUpdateForm/${team.id}/${team.teamName}"><i
 							class="fa fa-wrench"></i></a></td>
-					<td><i onclick="stadiumDelete(${stadium.id},this);"
-						class="fa fa-minus"></i></td>
+					<td><button onclick="deleteById(${team.id});"
+							class="btn btn-danger btn-sm">삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

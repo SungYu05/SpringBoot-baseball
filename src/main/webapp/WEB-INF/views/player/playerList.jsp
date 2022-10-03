@@ -24,14 +24,15 @@
 					<td>${player.playerName}</td>
 					<td><fmt:formatDate value="${player.createdAt}"
 							pattern="yyyy-MM-dd" /></td>
-					<td><a href="/teamUpdateForm/${player.id}/${player.playerName}"><i
+					<td><a
+						href="/teamUpdateForm/${player.id}/${player.playerName}"><i
 							class="fa fa-wrench"></i></a></td>
-					<td><i onclick="steamDelete(${team.id},this);"
-						class="fa fa-minus"></i></td>
+					<td><button onclick="deleteById(${player.id});"
+							class="btn btn-danger btn-sm">삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
-<script src="/js/team.js"></script>
+<script src="/js/player.js"></script>
 <%@ include file="../layout/footer.jsp"%>
